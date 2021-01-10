@@ -1,0 +1,72 @@
+<% breadcrumb :edit_product, @product %>
+<div class="control-panel pull-right">
+  <%= link_to previous_wizard_path, class: "btn btn-default btn-sm" do %>
+    <span class="glyphicon glyphicon-triangle-left"></span>
+    Back
+  <% end %>
+</div>
+<div class="header">
+  <h3>Marketing Details</h3>
+</div>
+<%= form_for(@product, method: :put, url: wizard_path, html: { class: "form form-signin", role: "form" } ) do |f| %>
+  <% if f.object.errors.any? %>
+    <div class="alert alert-danger">
+      <% f.object.errors.full_messages.each do |error| %>
+        <p><%= error %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-12 form-group">
+      <%= f.label :format_and_structure %>
+      <%= f.text_area :format_and_structure, required: true, placeholder: 'Content, number of episodes, etc.', class: 'form-control' %>
+    </div>
+    <div class="col-md-12 form-group">
+      <%= f.label :programme_benchmark %>
+      <%= f.text_area :programme_benchmark, required: true, placeholder: 'Positioning - Competitive similar shows', class: 'form-control' %>
+    </div>
+    <div class="col-md-12 form-group">
+      <%= f.label :marketing_message_ideas %>
+      <%= f.text_area :marketing_message_ideas, required: true, class: 'form-control' %>
+    </div>
+    <div class="col-md-12 form-group">
+      <h4>Target Audience</h4>
+      <h5><%= f.label :age_ids, 'Age' %></h5>
+      <%= f.collection_check_boxes :age_ids, Age.all, :id, :range, {required: true} do |cb| %>
+        <div class="col-md-2 form-group">
+          <%= cb.check_box %> <%= cb.label %> 
+        </div> 
+      <% end %>
+    </div>
+    <div class="col-md-12 form-group">
+      <h5><%= f.label :education_ids, 'Education' %></h5>
+      <%= f.collection_check_boxes :education_ids, Education.all, :id, :level, {required: true} do |cb| %>
+        <div class="col-md-6 form-group">
+          <%= cb.check_box %> <%= cb.label %> 
+        </div> 
+      <% end %>
+    </div>
+    <hr>
+    <div class="col-md-12 form-group">
+      <h5><%= f.label :gender_ids, 'Gender' %></h5>
+      <%= f.collection_check_boxes :gender_ids, Gender.all, :id, :identity, {required: true} do |cb| %>
+        <div class="col-md-6 form-group">
+          <%= cb.check_box %> <%= cb.label %> 
+        </div> 
+      <% end %>
+    </div>
+    <hr>
+    <div class="col-md-12 form-group">
+      <h5><%= f.label :region_ids, 'Region' %></h5>
+      <%= f.collection_check_boxes :region_ids, Region.all, :id, :name, {required: true} do |cb| %>
+        <div class="col-md-4 form-group">
+          <%= cb.check_box %> <%= cb.label %> 
+        </div> 
+      <% end %>
+    </div>
+  </div>
+  <div class="footer">
+    <%= f.submit 'Next Step', class: "btn btn-primary btn-lg btn-block" %>
+  </div>  
+<% end %>

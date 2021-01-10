@@ -1,0 +1,12 @@
+<% breadcrumb :edit_product_episode_marketing_material, @product, @episode, @marketing_marketing %>
+<div class="control-panel pull-right">
+  <%= link_to product_episode_marketing_material, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+</div>
+<div class="header">
+  <h3>Editing episode marketing material</h3>
+</div>
+
+<%= render 'form' %>

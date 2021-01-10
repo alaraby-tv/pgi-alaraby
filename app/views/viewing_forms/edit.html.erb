@@ -1,0 +1,9 @@
+<div class="header">
+  <h3>Editing viewing form</h3>
+  <%= link_to product_viewing_form_path(@product, @viewing_form), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-info-sign"></span>
+    Show
+  <% end %>
+</div>
+
+<%= render 'partials/viewing_form' %>

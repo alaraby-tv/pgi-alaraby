@@ -1,0 +1,16 @@
+
+<div class="control-panel pull-right">
+  <%= link_to product_permissions_path, class: 'btn btn-default btn-sm' do %>
+    <span class="glyphicon glyphicon-triangle-left"></span>
+    Back
+  <% end %>
+  <%= link_to product_permission_path, class: 'btn btn-primary btn' do %>
+    <span class="glyphicon glyphicon-info-sign"></span>
+    Show
+  <% end %>
+</div>
+<div class="header">  
+  <h3>Editing permission</h3>
+</div>
+
+<%= render 'form' %>

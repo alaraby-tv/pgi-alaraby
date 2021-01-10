@@ -1,0 +1,80 @@
+<% breadcrumb :product_permissions, @product %>
+<div class="controll-panel pull-right">
+  <% if allowed_user?(@product, current_user) %>
+    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-permission"><span class="glyphicon glyphicon-plus"></span> New Permision</button>
+  <% end %>
+  <%= link_to product_path(@product), class: 'btn btn-default btn-sm' do %>
+    <span class="glyphicon glyphicon-triangle-left"></span>
+    Back
+  <% end %>
+</div>
+<div class="header">
+  
+  <h3><%= @product.english_title %> permissions</h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="col-md-12">
+      <% if @product.permissions.any? %>
+        <div class="table-responsive">
+          <table class="table table-condenced">
+            <thead>
+              <tr>      
+                <th>User</th>
+                <th></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <%= content_tag_for(:tr, @permissions) do |permission| %>
+                <td><%= permission.user.full_name %></td>
+                <td>
+                  <%= link_to product_permission_path(@product, permission), method: :delete, class: 'btn btn-danger btn-xs' do %>
+                    <span class="glyphicon glyphicon-trash"></span>
+                    Remove
+                  <% end %>
+                </td>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <p>No permissions</p>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-permission" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">New permission for <%= @product.english_title %></h4>
+      </div>
+      <%= form_for(Permission.new, html: { class: "form form-signin", role: "form" }) do |f| %>
+        <% if f.object.errors.any? %>
+          <div class="alert alert-danger">
+            <% f.object.errors.full_messages.each do |error| %>
+              <p><%= error %></p>
+            <% end %>
+          </div>
+        <% end %>
+        <%= f.hidden_field :product_id, value: @product.id %>
+        <div class="row">
+          <div class="col-md-12 form-group">
+            <%= f.label :user_id %>
+            <%= f.collection_select :user_id, User.all_except(current_user), :id, :full_name, {prompt: 'Select user'}, required: true, class: 'form-control' %>
+          </div>
+        </div>
+        <div class="footer">
+          <%= button_tag class: "btn btn-primary btn-lg btn-block" do %>
+            <span class="glyphicon glyphicon-floppy-disk"></span>
+            Save
+          <% end %> 
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

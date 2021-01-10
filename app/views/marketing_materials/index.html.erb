@@ -1,0 +1,54 @@
+<% breadcrumb :product_marketing_materials, @product, @marketing_material %>
+<div class="control-panel pull-right">
+  <% if allowed_user?(@product, current_user) %>
+    <%= link_to new_product_marketing_material_path(@product), class: 'btn btn-success btn-sm' do %>
+      <span class="glyphicon glyphicon-plus"></span>
+      New Folder
+    <% end %>
+  <% end %>
+  <%= link_to product_path(@product), class: 'btn btn-default btn-sm' do %>
+    <span class="glyphicon glyphicon-triangle-left"></span>
+    Back
+  <% end %>
+</div>
+<div class="header">
+  <h3>Marketing Materials</h3>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>Folder</th>
+              <th>Qty</th>
+              <th>Type</th>
+              <th><%= content_tag(:span, '', class: 'glyphicon glyphicon-ok') %></th>
+              <th>Readiness</th>
+              <th></th>
+            </tr> 
+          </thead>
+          <tbody>
+            <% @marketing_materials.each do |marketing_material| %>
+              <tr>
+                <td><%= marketing_material.name %></td>
+                <td><%= marketing_material.attachments.size %></td>
+                <td><%= marketing_material.material_type.name %></td>
+                <td><%= true_or_false? marketing_material.any_attachments? %></td>
+                <td><%= marketing_material.readiness_date ? marketing_material.readiness_date : 'TBC' %></td>
+                <td>
+                  <%= link_to product_marketing_material_path(@product, marketing_material), class: 'btn btn-xs btn-primary' do %>
+                    <span class="glyphicon glyphicon-search"></span>
+                    Show
+                  <% end %>
+                </td>
+              </tr> 
+            <% end %>
+          </tbody>
+        </table>
+        <%= paginate @marketing_materials %>
+      </div>
+    </div>
+  </div>
+</div>

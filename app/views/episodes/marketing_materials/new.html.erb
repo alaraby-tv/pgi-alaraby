@@ -1,0 +1,12 @@
+<% breadcrumb :new_product_episode_marketing_material, @product, @episode, @marketing_material %>
+<div class="control-panel pull-right">
+  <%= link_to product_episode_marketing_materials_path, class: 'btn btn-default btn-sm' do %>
+    <span class="glyphicon glyphicon-triangle-left"></span>
+    Back
+  <% end %>
+</div>
+<div class="header">
+  <h3>New folder</h3>
+</div>
+
+<%= render 'form' %>

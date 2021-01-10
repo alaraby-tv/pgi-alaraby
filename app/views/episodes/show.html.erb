@@ -1,0 +1,106 @@
+<% breadcrumb :product_episode, @product, @episode %>
+<div class="pull-right">
+  <% #link_to new_product_episode_viewing_form_path(@product, @episode), class: 'btn btn-primary' do %>
+    <!-- <span class="glyphicon glyphicon-plus"></span>
+    Add Viewing Form -->
+  <% #end %>
+  <%= link_to product_episode_marketing_materials_path(@product, @episode), class: 'btn btn-info btn-sm' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Marketing Materials
+  <% end %>
+  <%= link_to edit_product_episode_path(@product), class: 'btn btn-primary btn-sm' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <%= link_to product_episodes_path, class: 'btn btn-default btn-sm' do %>
+    <span class="glyphicon glyphicon-triangle-left"></span>
+    Back
+  <% end %>  
+</div>
+<div class="header">
+  <h3><%= @episode.english_title %></h3>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="col-md-6">
+      <dl class="header">
+        <strong>Initiator</strong>
+        <dd><%= @episode.user.full_name %></dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="header">
+        <strong>Episode #</strong>
+        <dd><%= @episode.episode_number %></dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="header">
+        <strong>English title</strong>
+        <dd><%= @episode.english_title %></dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="header">
+        <strong>Arabic title</strong>
+        <dd><%= @episode.arabic_title %></dd>
+      </dl>
+    </div>
+    <div class="col-md-12">
+      <dl class="header">
+        <strong>Topic</strong>
+        <dd><%= @episode.topic %></dd>
+      </dl>
+    </div>
+    <div class="col-md-12">
+      <dl class="header">
+        <strong>Episode description</strong>
+        <dd><%= @episode.description %></dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="header">
+        <strong>Production company</strong>
+        <dd><%= @episode.production_company.name %></dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="header">
+        <strong>PO number</strong>
+        <dd><%= @episode.po %></dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="header">
+        <strong>Production region</strong>
+        <dd><%= @episode.production_region %></dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="header">
+        <strong>First broadcasting date</strong>
+        <dd><%= @episode.first_shooting_date %></dd>
+      </dl>
+    </div>
+    <div class="col-md-12">
+      <dl class="header">
+        <strong>Guest(s)</strong>
+        <% if @episode.guests.exists? %>
+          <ul class="list-inline"></ul>
+            <% @episode.guests.each do |guest| %>
+              <li><%= guest.name %></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <dd>No guest</dd>
+        <% end %>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="header">
+        <strong>Subtitled?</strong>
+        <dd><%= true_or_false? @episode.subtitled %></dd>
+      </dl>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<%= form_for([@product, @episode, @marketing_material], html: { class: "form form-signin", id: "marketing-material-form", role: "form" }) do |f| %>
+  <% if f.object.errors.any? %>
+    <div class="alert alert-danger">
+      <% f.object.errors.full_messages.each do |error| %>
+        <p><%= error %></p>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="row">
+    <div class="col-md-12 form-group">
+      <%= f.label :name %>
+      <%= f.text_field :name, required: true, placeholder: 'Folder name', class: 'form-control' %>
+    </div>
+    <div class="col-md-12 form-group">
+      <%= f.label :material_type_id %>
+      <%= f.collection_select :material_type_id, MaterialType.all, :id, :name, {prompt: 'Select material type'}, required: true, class: 'form-control' %>
+    </div>
+    <div class="col-md-12 form-group">
+      <%= f.label :readiness_date %>
+      <%= f.text_field :readiness_date, required: true, placeholder: 'Select date', class: 'form-control datepicker' %>
+    </div>
+  </div>
+  <div class="footer">
+    <%= button_tag class: "btn btn-primary btn-lg btn-block" do %>
+      <span class="glyphicon glyphicon-floppy-disk"></span>
+      Save
+    <% end %> 
+  </div>
+<% end %>

@@ -1,0 +1,64 @@
+<% breadcrumb :edit_product, @product %>
+<div class="control-panel pull-right">
+  <% if @product.english_title? %>
+    <%= link_to product_path(@product), class: 'btn btn-default btn-sm' do %>
+      <span class="glyphicon glyphicon-triangle-left"></span>
+      Back
+    <% end %>
+  <% else %>
+    <%= link_to products_path, class: 'btn btn-default btn-sm' do %>
+      <span class="glyphicon glyphicon-triangle-left"></span>
+      Back
+    <% end %>
+  <% end %>
+</div>
+<div class="header">
+  <h3><%= @product.active? ? 'Editing product' : 'New product' %></h3>
+</div>
+<%= form_for(@product, method: :put, url: wizard_path, html: { class: "form form-signin", role: "form" } ) do |f| %>
+  <% if f.object.errors.any? %>
+    <div class="alert alert-danger">
+      <% f.object.errors.full_messages.each do |error| %>
+        <p><%= error %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-12 form-group">
+      <%= f.label :product_type_id %>
+      <%= f.collection_select :product_type_id, ProductType.all, :id, :sort, {prompt: 'Select product type', disabled: true, hidden: true}, {class: 'form-control', required: true, autofocus: true} %>
+    </div>
+    <div class="col-md-6 form-group">
+      <%= f.label :department_id %>
+      <%= f.collection_select :department_id, Department.all, :id, :name, {prompt: 'Select department', disabled: true, hidden: true}, {class: 'form-control', required: true, autofocus: true} %>
+    </div>
+    <div class="col-md-6 form-group">
+      <%= f.label :nature_id %>
+      <%= f.collection_select :nature_id, Nature.all, :id, :name, {prompt: 'Select nature', disabled: true, hidden: true}, {class: 'form-control', required: true} %>
+    </div>
+    <div class="col-md-6 form-group">
+      <%= f.label :category_id %>
+      <%= f.collection_select :category_id, Category.all, :id, :name, {prompt: 'Select category', disabled: true, hidden: true}, {class: 'form-control', required: true} %>
+    </div>
+    <div class="col-md-6 form-group">
+      <%= f.label :genre_id %>
+      <%= f.collection_select :genre_id, Genre.all, :id, :name, {prompt: 'Select genre', disabled: true, hidden: true}, {class: 'form-control', required: true} %>
+    </div>
+    <div class="col-md-12 form-group">
+      <h5><%= f.label :broadcast_medium_ids, 'Broadcast Media' %></h5>
+      <%= f.collection_check_boxes :broadcast_medium_ids, BroadcastMedium.all, :id, :name do |cb| %>
+        <div class="col-md-4 form-group">
+          <%= cb.check_box %> <%= cb.label %> 
+        </div> 
+      <% end %>
+    </div>
+    <div class="col-md-12 form-group">
+      <%= f.label :logo %>
+      <%= f.file_field :logo %>
+    </div>
+  </div>
+  <div class="footer">
+    <%= f.submit 'Next Step', class: "btn btn-primary btn-lg btn-block" %>
+  </div>   
+<% end %>

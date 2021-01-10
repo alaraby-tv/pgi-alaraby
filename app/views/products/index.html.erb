@@ -1,0 +1,53 @@
+<% breadcrumb :products %>
+<div class="control-panel pull-right">
+  <%= link_to products_path, method: :post, class: 'btn btn-success btn-sm' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Product
+  <% end %>
+  <%= link_to root_path, class: 'btn btn-default btn-sm' do %>
+    <span class="glyphicon glyphicon-triangle-left"></span>
+    Back
+  <% end %>
+</div>
+<div class="header">
+  <h3>Listing products</h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="col-md-12">
+      <ul class="nav nav-tabs nav-justified">
+        <li <% if params[:action] == 'index' %>class="active"<% end %>><%= link_to 'All Products', products_path %></li>
+        <li <% if params[:action] == 'single' %>class="active"<% end %>><%= link_to 'Single Products', single_products_path %></li>
+        <li <% if params[:action] == 'multi_episode' %>class="active"<% end %>><%= link_to 'Series', multi_episode_products_path %></li>
+        <li <% if params[:action] == 'owned' %>class="active"<% end %>><%= link_to 'Owned', owned_products_path %></li>
+        <li <% if params[:action] == 'shared' %>class="active"<% end %>><%= link_to 'Shared With Me', shared_products_path %></li>
+      </ul>
+      <div class="table-responsive">
+        <table class="table table-condesed">
+          <thead>
+            <tr>
+              <th>English title</th>
+              <th>Arabic title</th>
+              <th></th>    
+            </tr>
+          </thead>
+
+          <tbody>
+            <%= content_tag_for(:tr, @products) do |product| %>
+              <td><%= product.english_title %></td>
+              <td><%= product.arabic_title %></td>
+              <td>
+                <%= link_to product, class: 'btn btn-xs btn-primary' do %>
+                  <span class="glyphicon glyphicon-search"></span>
+                  Show
+                <% end %>
+              </td> 
+            <% end %>
+          </tbody>
+        </table>
+        <%= paginate @products %>
+      </div>
+    </div>
+  </div>
+</div>

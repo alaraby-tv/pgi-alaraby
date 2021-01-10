@@ -1,0 +1,16 @@
+
+<div class="control-panel pull-right">
+  <%= link_to product_permissions_path, class: 'btn btn-default btn-sm' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_product_permission_path(@product, @permission), class: 'btn btn-primary btn-sm' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+</div>
+<div class="header">  
+  <h3>Permissions for <%= @product.english_title %></h3>
+</div>
+
+

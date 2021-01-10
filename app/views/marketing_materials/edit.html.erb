@@ -1,0 +1,13 @@
+<% breadcrumb :edit_product_marketing_material, @product, @marketing_material %>
+<div class="control-panel pull-right">
+  <%= link_to product_marketing_material_path(@product), class: 'btn btn-default btn-sm' do %>
+    <span class="glyphicon glyphicon-triangle-left"></span>
+    Back
+  <% end %>
+</div>
+<div class="header">
+  <h3>Editing <%= @marketing_material.name %></h3>
+</div>
+
+
+<%= render 'form' %>

@@ -1,0 +1,17 @@
+
+<%= devise_error_messages(resource) %>
+<%= form_for(resource, as: resource_name, url: invitation_path(resource_name), html: { method: :put, class: "form-signin" }) do |f| %>
+  <h2><%= t "devise.invitations.edit.header" %></h2>
+  <%= f.hidden_field :invitation_token, readonly: true %>
+
+  <% if f.object.class.require_password_on_accepting %>
+    <%= f.label :password, class: "sr-only" %>
+    <%= f.password_field :password, autocomplete: 'off', autofocus: true, required: true, placeholder: "Password", class: 'form-control' %>
+  
+    <%= f.label :password_confirmation, class: "sr-only" %>
+    <%= f.password_field :password_confirmation, autocomplete: 'off', autofocus: true, required: true, placeholder: "Password confirmation", class: 'form-control'  %>
+  <% end %>
+
+    <%= f.submit t("devise.invitations.edit.submit_button"), class: 'btn btn-primary btn-lg btn-block' %>
+  </div>
+<% end %>

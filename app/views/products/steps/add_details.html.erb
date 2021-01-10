@@ -1,0 +1,83 @@
+<% breadcrumb :edit_product, @product %>
+<div class="control-panel pull-right">
+  <%= link_to previous_wizard_path, class: "btn btn-default btn-sm" do %>
+    <span class="glyphicon glyphicon-triangle-left"></span>
+    Back
+  <% end %>
+</div>
+<div class="header">
+  <h3>Details of the product</h3>
+</div>
+<%= form_for(@product, method: :put, url: wizard_path, html: { class: "form form-signin", role: "form" } ) do |f| %>
+  <% if f.object.errors.any? %>
+    <div class="alert alert-danger">
+      <% f.object.errors.full_messages.each do |error| %>
+        <p><%= error %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-6 form-group">
+      <%= f.label :english_title %>
+      <%= f.text_field :english_title, required: true, placeholder: 'English title', class: 'form-control' %>
+    </div>
+    <div class="col-md-6 form-group">
+      <%= f.label :arabic_title %>
+      <%= f.text_field :arabic_title, required: true, placeholder: 'Arabic title', class: 'form-control' %>
+    </div>
+    <div class="col-md-12 form-group">
+      <%= f.label :full_description %>
+      <%= f.text_area :full_description, required: true, placeholder: 'Full product description', class: 'form-control' %>
+    </div>
+    
+    
+    <% unless @product.single_product? %>
+      <div class="col-md-6 form-group">
+        <%= f.label :season %>
+        <%= f.number_field :season, placeholder: 'Season', class: 'form-control' %>
+      </div>
+      <div class="col-md-6 form-group">
+        <%= f.label :number_of_episodes %>
+        <%= f.number_field :number_of_episodes, placeholder: 'Number of episodes', class: 'form-control' %>
+      </div>
+      <div class="col-md-6 form-group">
+        <%= f.label :broadcasting_frequency_id %>
+        <%= f.collection_select :broadcasting_frequency_id, BroadcastingFrequency.all, :id, :regularity, {prompt: 'Select broadcasting frequency', disabled: true, hidden: true}, {class: 'form-control', required: true} %>
+      </div>
+    <% end %>
+    <% if @product.single_product? %>
+    <div class="col-md-12 form-group">
+      <%= f.label :short_description %>
+      <%= f.text_area :short_description, required: true, placeholder: 'Short description', class: 'form-control' %>
+    </div>
+    <div class="col-md-12 form-group">
+        <%= f.check_box :subtitled %>
+        <%= f.label :subtitled, 'Subtitled?' %>
+      </div>
+      <div class="col-md-12 form-group">
+        <%= f.label :production_region %>
+        <%= f.text_field :production_region, placeholder: 'Production region', class: 'form-control' %>
+      </div>
+      <div class="col-md-6 form-group">
+        <%= f.label :broadcasting_date, "First broadcasting date" %>
+        <%= f.text_field :broadcasting_date, placeholder: 'Broadcasting date', class: 'form-control datepicker' %>
+      </div>
+    <% end %>
+    <div class="col-md-6 form-group">
+      <%= f.label :production_year %>
+      <%= f.text_field :production_year, placeholder: 'Production year', class: 'form-control yearpicker' %>
+    </div>
+    <div class="col-md-6 form-group">
+      <%= f.label :broadcasting_time %>
+      <%= f.text_field :broadcasting_time, placeholder: 'Broadcasting time', class: 'form-control timepicker' %>
+    </div>
+    <div class="col-md-6 form-group">
+      <%= f.label :duration_id, 'Duration in minutes' %>
+      <%= f.collection_select :duration_id, Duration.all, :id, :length_in_minutes, {prompt: 'Select duration', disabled: true, hidden: true}, {class: 'form-control', required: true} %>
+    </div>
+  </div>
+  <div class="footer">
+    <%= f.submit 'Save Product', class: "btn btn-primary btn-lg btn-block" %>
+  </div>  
+<% end %>

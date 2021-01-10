@@ -1,0 +1,56 @@
+<% breadcrumb :product_episodes, @product %>
+  <div class="pull-right">
+    <% if allowed_user?(@product, current_user) %>
+      <%= link_to new_product_episode_path, class: 'btn btn-success btn-sm' do %>
+        <span class="glyphicon glyphicon-plus"></span>
+        New Episode
+      <% end %>
+    <% end %>
+    <%= link_to product_path(@product), class: 'btn btn-default btn-sm' do %>
+      <span class="glyphicon glyphicon-triangle-left"></span>
+      Back
+    <% end %>
+  </div>
+<div class="header">
+  <h3>Season <%= @product.season %> episodes <small><%= @product.episodes.size %>/<%= @product.number_of_episodes %></small></h3>
+</div>
+
+<div class="table-responsive">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="col-md-12">
+        <% if @product.any_episodes? %>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th>Episode #</th>
+                <th>English Title</th>
+                <th>Arabic Title</th>
+                <th></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <%= content_tag_for(:tr, @episodes) do |episode| %>
+                <td><%= episode.episode_number %></td>
+                <td><%= episode.english_title %></td>
+                <td><%= episode.arabic_title %></td>
+                <td>
+                  <%= link_to product_episode_path(@product, episode), class: 'btn btn-xs btn-primary' do %>
+                    <span class="glyphicon glyphicon-search"></span>
+                    Show
+                  <% end %>    
+                </td>
+              <% end %>
+            </tbody>
+          </table>
+          <%= paginate @episodes %>
+        <% else %>
+          <p>No Episodes</p>
+        <% end %> 
+      </div>
+    </div>
+  </div>
+</div>
+
+

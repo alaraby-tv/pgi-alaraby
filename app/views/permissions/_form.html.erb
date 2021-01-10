@@ -1,0 +1,21 @@
+<%= form_for(@permission, html: { class: "form form-signin", role: "form" }) do |f| %>
+  <% if f.object.errors.any? %>
+    <div class="alert alert-danger">
+      <% f.object.errors.full_messages.each do |error| %>
+        <p><%= error %></p>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="row">
+    <div class="col-md-12 form-group">
+      <%= f.label :user_id %>
+      <%= f.collection_select :user_id, User.all, :id, :full_name, {prompt: 'Select user'}, required: true, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="footer">
+    <%= button_tag class: "btn btn-primary btn-lg btn-block" do %>
+      <span class="glyphicon glyphicon-floppy-disk"></span>
+      Save
+    <% end %> 
+  </div>
+<% end %>

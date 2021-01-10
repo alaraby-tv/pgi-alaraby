@@ -1,0 +1,81 @@
+<% breadcrumb :edit_product, @product %>
+<div class="control-panel pull-right">
+  <%= link_to previous_wizard_path, class: "btn btn-default btn-sm" do %>
+    <span class="glyphicon glyphicon-triangle-left"></span>
+    Back
+  <% end %>
+</div>
+<div class="header">
+  <h3>Internal and External Resources</h3>
+</div>
+<%= form_for(@product, method: :put, url: wizard_path, html: { class: "form form-signin", role: "form" } ) do |f| %>
+  <% if f.object.errors.any? %>
+    <div class="alert alert-danger">
+      <% f.object.errors.full_messages.each do |error| %>
+        <p><%= error %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @product.single_product? %>
+    <div class="row">
+      <div class="col-md-12">
+        <h4>Production Company</h4>
+        <div class="form-group">
+          <%= f.label :production_company_name, "Company Name" %>
+          <%= f.text_field :production_company_name, placeholder: "Production Company", data: { autocomplete_source: ProductionCompany.order(:name).map(&:name) }, class: 'form-control company-field' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :po, "PO Number" %>
+          <%= f.text_field :po, placeholder: "", class: 'form-control' %>
+        </div>
+        <h4>Guests</h4>
+        <table class="table table-condensed table-attainable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody class="guests">
+            <%= f.fields_for :guests do |builder| %>
+              <%= render 'guest_fields', f: builder %>
+            <% end %>
+          </tbody>
+        </table>
+        <%= link_to_add_association f, :guests, class: 'btn btn-success', data: { association_insertion_node: '.guests', association_insertion_method: :append } do %>
+          <span class="glyphicon glyphicon-plus"></span>
+          Add Guest 
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  <% unless @product.single_product? %>
+    <%= f.hidden_field :po, value: 'N/A' %>
+  <% end %>
+  <div class="row">
+    <div class="col-md-12">
+      <h4>Presenters</h4>
+      <table class="table table-condensed table-attainable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody class="presenters">
+          <%= f.fields_for :presenters do |builder| %>
+            <%= render 'presenter_fields', f: builder %>
+          <% end %>
+        </tbody>
+      </table>
+      <%= link_to_add_association f, :presenters, class: 'btn btn-success', data: { association_insertion_node: '.presenters', association_insertion_method: :append } do %>
+        <span class="glyphicon glyphicon-plus"></span>
+        Add Presenter
+    <% end %> 
+    </div>
+  </div>
+  <div class="footer">
+    <%= f.submit 'Next Step', class: "btn btn-primary btn-lg btn-block" %>
+  </div> 
+<% end %>

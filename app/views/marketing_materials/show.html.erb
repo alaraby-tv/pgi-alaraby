@@ -1,0 +1,118 @@
+<% breadcrumb :product_marketing_material, @product, @marketing_material %>
+<div class="control-panel pull-right">
+  <% if allowed_user?(@product, current_user) %>
+    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-attachment"><span class="glyphicon glyphicon-plus"></span> Attachment</button>
+    <%= link_to edit_product_marketing_material_path(@product), class: 'btn btn-primary btn-sm' do %>
+      <span class="glyphicon glyphicon-pencil"></span>
+      Edit
+    <% end %>
+  <% end %>
+  <%= link_to product_marketing_materials_path, class: 'btn btn-default btn-sm' do %>
+    <span class="glyphicon glyphicon-triangle-left"></span>
+    Back
+  <% end %>
+</div>
+<div class="header">
+  <h3>Showing <%= @marketing_material.name %></h3>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="col-md-6">
+      <dl class="header">
+        <strong>Name</strong>
+        <dd><%= @marketing_material.name %></dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="header">
+        <strong>Material Type</strong>
+        <dd id="material-type"><%= @marketing_material.material_type.name %><dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="header">
+        <strong>Readiness Date</strong>
+        <dd><%= @marketing_material.readiness_date? ? @marketing_material.readiness_date : 'TBC' %></dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="header">
+        <strong>Availability</strong>
+        <dd><%= true_or_false? @marketing_material.attachments.exists? %></dd>
+      </dl>
+    </div>
+    <% if @marketing_material.attachments.exists? %>
+      <div class="col-md-12">
+        <div class="attachments">
+          <h4>Attachments</h4>
+        </div>
+        <table class="table table-condenced">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Comment</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @marketing_material.attachments.each do |attachment| %>
+              <tr>
+                <td><%= attachment.file_attached.file.filename %></td>
+                <td><%= attachment.notes %></td>
+                <td>
+                  <%= link_to attachment, data: { turbolinks: false }, class: 'label label-info' do %>
+                    <span class="glyphicon glyphicon-cloud-download"></span>
+                    Download
+                  <% end %>
+                  <% if allowed_user?(@product, current_user) %>
+                    <%= link_to remove_attachment_product_marketing_material_path(attachment_id: attachment.id), method: :post, data: { confirm: "Are you sure?", disable_with: "Deleting..." }, class: 'label label-danger' do %>
+                      <span class="glyphicon glyphicon-trash"></span>
+                      Delete
+                    <% end %>
+                  <% end %>
+                </td>
+              </tr> 
+            <% end %>
+          </tbody>
+        </table> 
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-attachment" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">New Attachment</h4>
+      </div>
+      <%= form_for(Attachment.new, html: { class: "form form-signin", id: "attachment-form", role: "form" }) do |f| %>
+        <% if f.object.errors.any? %>
+          <div class="alert alert-danger">
+            <% f.object.errors.full_messages.each do |error| %>
+              <p><%= error %></p>
+            <% end %>
+          </div>
+        <% end %>
+        <%= f.hidden_field :marketing_material_id, value: @marketing_material.id %>
+        <div class="modal-body">
+          <div class="form-group">
+            <%= f.label :notes, 'Comment' %>
+            <%= f.text_field :notes, placeholder: 'Note', class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :file_attached, 'File' %>
+            <%= f.file_field :file_attached, onchange: "validateFiles(this);", data: { max_file_size: 250.megabytes }, required: true, class: "attachment_field" %>
+          </div> 
+        </div>
+        <div class="modal-footer">
+          <%= button_tag class: "btn btn-primary btn-lg btn-block", data: { disable_with: "Uploading..."} do %>
+            <span class="glyphicon glyphicon-cloud-upload"></span>
+            Upload
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

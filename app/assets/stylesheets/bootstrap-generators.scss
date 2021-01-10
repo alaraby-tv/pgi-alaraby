@@ -1,0 +1,249 @@
+@import "bootstrap-variables.scss";
+@import "bootstrap-sprockets.scss";
+@import "bootstrap.scss";
+
+/* sign in form */
+
+.form-signin {
+  max-width: 100%;
+  padding: 15px;
+  margin: 0 auto;
+  label {
+    margin-left: 2px;
+  }
+  .form-signin-heading, .checkbox {
+    margin-bottom: 10px;
+  }
+  .checkbox {
+    font-weight: 400;
+  }
+  .btn-lg {
+    border-radius: 2px;
+    margin-bottom: 12px;
+    padding: 8px 16px;
+    font-size: 14px;
+    max-height: 42px;
+  }
+  .form-control {
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 35px;
+    padding: 7px;
+    font-size: 14px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+  }
+  .form-control:focus {
+    z-index: 2;
+  }
+  input {
+    margin-bottom: 10px;
+    border-radius: 2px;
+  }
+  input[type="file"] {
+    display: block;
+  }
+  select.form-control { 
+    -webkit-appearance: none;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    margin-bottom: 10px;
+  }
+  select:invalid {
+    color: #9a9a9a;
+  }
+  textarea.form-control {
+    height: 66px;
+    margin-bottom: 10px;
+  }
+  .input-group-btn {
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+  }
+
+  div.row > h4 {
+    margin-left: 15px;
+
+  }
+  .btn-remove-part {
+    margin-top: 55px;
+  }
+}
+
+.modal-content {
+  background-color: #ccc;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+}
+
+.table-attainable > tbody > tr > td {
+  padding-left: 0 !important;
+}
+
+#marketing-details-header {
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+/* autocompletion */
+
+ul.ui-autocomplete {
+  position: absolute;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: solid 1px #CCC;
+  cursor: default;
+  li {
+    background-color: white;
+    border-top: solid 1px #CCC;
+    margin: 0;
+    padding: 0;
+    a {
+      color: #000;
+      display: block;
+      padding: 18px;
+    }
+    a.ui-state-hover, a.ui-state-active {
+      background-color: #CCC;
+    }
+  }
+}
+
+/* narrow-body */
+
+/* Space out content a bit */
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #fff;
+  background-image: image-url('PGI_BG.jpg');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.breadcrumb {
+  border-radius: 2px;
+  margin-bottom: 10px;
+}
+
+.home-header {
+  margin-top: 40px;
+}
+
+/* Everything gets side spacing for mobile first views */
+.header,
+.footer {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.jumbotron {
+  background-color: #ccc;
+  -webkit-box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+}
+
+.jumbotron, .alert {
+  border-radius: 2px !important;
+  .header {
+    margin: 0 15px 10px;
+    padding-bottom: 15px;
+  }
+}
+
+.attachments {
+  margin-top: 30px;
+}
+
+/* Custom page header */
+.header {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e5e5e5;
+  h3 {
+    display: inline-block;
+    margin-top: 30px;
+    margin-bottom: 0;
+    text-transform: uppercase;
+    line-height: 40px; /* Make the masthead heading the same height as the navigation */
+  }
+  .nav-pills > li > a {
+    border-radius: 2px;
+  }
+  .product-logo {
+    margin-right: 15px;
+  }
+  .product-title {
+    margin-bottom: 10px;
+  }
+}
+
+.nav-tabs-justified > li > a {
+  border-radius: 2px 2px 0 0;
+}
+.nav-tabs-justified > .active > a {
+  background-color: #f8f8f8;
+ }
+
+.ps2 {
+  right:0;
+  border-radius: 2px;
+}
+
+.btn {
+  border-radius: 2px;
+}
+
+.navbar-logo {
+  margin-top: -17px;
+  max-height: 48px;
+}
+
+.preview-file,
+.add_fields,
+.remove_fields {
+  margin-bottom: 15px;
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #444;
+  border-top: 1px solid #e5e5e5;
+}
+
+/* Customize container */
+@media (min-width: 768px) {
+  .container {
+    max-width: 80%;
+  }
+}
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+.label {
+  margin-right: 4px;
+}
+
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .footer {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  .header {
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+  }
+  .jumbotron {
+    border-bottom: 0;
+    padding: 35px !important;
+  }
+}

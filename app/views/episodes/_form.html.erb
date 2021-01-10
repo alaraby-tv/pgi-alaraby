@@ -1,0 +1,77 @@
+<%= form_for([@product, @episode], html: { class: "form form-signin", role: "form" }) do |f| %>
+  <% if f.object.errors.any? %>
+    <div class="alert alert-danger">
+      <% f.object.errors.full_messages.each do |error| %>
+        <p><%= error %></p>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="row">
+    <div class="col-md-12 form-group">
+      <%= f.label :production_company_name, "Production Company Name" %>
+      <%= f.text_field :production_company_name, placeholder: "Production Company", data: { autocomplete_source: ProductionCompany.order(:name).map(&:name) }, class: 'form-control company-field' %>
+    </div>
+    <div class="col-md-6 form-group">
+      <%= f.label :po, "PO Number" %>
+      <%= f.number_field :po, required: true, placeholder: "e.g. 5764", class: 'form-control' %>
+    </div>
+    <div class="col-md-6 form-group">
+      <%= f.label :po, "Episode #" %>
+      <%= f.number_field :episode_number, required: true, class: 'form-control' %>
+    </div>
+    <div class="col-md-6 form-group">
+      <%= f.label :english_title %>
+      <%= f.text_field :english_title, required: true, placeholder: 'English title', class: 'form-control' %>
+    </div>
+    <div class="col-md-6 form-group">
+      <%= f.label :arabic_title %>
+      <%= f.text_field :arabic_title, required: true, placeholder: 'Arabic title', class: 'form-control' %>
+    </div>
+    <div class="col-md-12 form-group">
+      <%= f.label :topic %>
+      <%= f.text_field :topic, required: true, placeholder: 'Topic', class: 'form-control' %>
+    </div>
+    <div class="col-md-12 form-group">
+      <%= f.label :description %>
+      <%= f.text_area :description, required: true, placeholder: 'Episode description', class: 'form-control' %>
+    </div>
+    <div class="col-md-6 form-group">
+        <%= f.label :production_region %>
+        <%= f.text_field :production_region, placeholder: 'Production region', class: 'form-control' %>
+    </div>
+    <div class="col-md-6 form-group">
+      <%= f.label :first_shooting_date, "First broadcasting date" %>
+      <%= f.text_field :first_shooting_date, placeholder: 'First broadcasting date', class: 'form-control datepicker' %>
+    </div>
+    <div class="col-md-12 form-group">
+      <%= f.check_box :subtitled %>
+      <%= f.label :subtitled, 'Subtiteled?' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h4>Guests</h4>
+      <table class="table table-condensed table-attainable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody class="guests">
+          <%= f.fields_for :guests do |builder| %>
+            <%= render 'guest_fields', f: builder %>
+          <% end %>
+        </tbody>
+      </table>
+      <%= link_to_add_association f, :guests, class: 'btn btn-success', data: { association_insertion_node: '.guests', association_insertion_method: :append } do %>
+        <span class="glyphicon glyphicon-plus"></span>
+        Add Guest 
+      <% end %>
+    </div>
+  </div>
+  <div class="footer">
+    <%= f.submit class: "btn btn-primary btn-lg btn-block" %>
+  </div>
+<% end %>
+

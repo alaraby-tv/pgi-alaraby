@@ -1,0 +1,280 @@
+<% breadcrumb :product, @product %>
+<div class="control-panel pull-right">
+  <%= link_to product_permissions_path(@product), class: 'btn btn-warning btn-sm' do %>
+    <span class="glyphicon glyphicon-lock"></span>
+    Permissions
+  <% end %>
+  <% if @product.single_product? %>
+    <% #link_to new_product_viewing_form_path(@product), class: 'btn btn-primary' do %>
+      <!-- <span class="glyphicon glyphicon-plus"></span>
+      Add Viewing Form -->
+    <% #end %>
+  <% else %>
+    <%= link_to product_episodes_path(@product), class: 'btn btn-info btn-sm' do %>
+      <span class="glyphicon glyphicon-list-alt"></span>
+      Episodes
+    <% end %>
+  <% end %>
+  <%= link_to product_marketing_materials_path(@product), class: 'btn btn-info btn-sm' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Marketing Materials
+  <% end %>
+  <% if allowed_user?(@product, current_user) %>
+    <%= link_to product_step_path(@product, Product.form_steps.first), class: 'btn btn-primary btn-sm' do %>
+      <span class="glyphicon glyphicon-pencil"></span>
+      Edit
+    <% end %>
+  <% end %>
+  <%= link_to products_path, class: 'btn btn-default btn-sm' do %>
+    <span class="glyphicon glyphicon-triangle-left"></span>
+    Back
+  <% end %>
+</div> 
+<div class="header">
+  <div class="product-title">
+    <h3><%= @product.english_title %></h3>
+  </div>
+  
+  <div class="pull-left">
+    <%= image_tag(@product.logo_url(:thumb), class: 'product-logo') if @product.logo? %> 
+  </div>
+  
+  <dl>
+    <dd>Initiator</dd>
+    <dd><small>Name : <%= @product.user.full_name %></small></dd>
+    <dd><small>Email : <%= @product.user.email %></small></dd>
+    <dd><small>Date created : <%= @product.created_at.strftime("%Y-%m-%d") %></small></dd>
+  </dl>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="col-md-12">
+      <dl class="header">
+        <strong>Type</strong>
+        <dd><%= @product.product_type.sort %></dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="header">
+        <strong>English title</strong>
+        <dd><%= @product.english_title %></dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="header">
+        <strong>Arabic title</strong>
+        <dd><%= @product.arabic_title %></dd>
+      </dl>
+    </div>
+    <div class="col-md-12">
+      <dl class="header">
+        <strong>Product Description</strong>
+        <dd><%= @product.full_description %></dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="header">
+        <strong>Nature</strong>
+        <dd><%= @product.nature.name %></dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="header">
+        <strong>Category</strong>
+        <dd><%= @product.category.name %></dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="header">
+        <strong>Genre</strong>
+        <dd><%= @product.genre.name %></dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="header">
+        <strong>Department</strong>
+        <dd><%= @product.department.name %></dd>
+      </dl>
+    </div>
+    <div class="col-md-4">
+      <dl class="header">
+        <strong>Production year</strong>
+        <dd><%= @product.production_year %></dd>
+      </dl>
+    </div>
+    <% unless @product.single_product? %>
+      <div class="col-md-4">
+        <dl class="header">
+          <strong>Season</strong>
+          <dd><%= @product.season %></dd>
+        </dl>
+      </div>
+      <div class="col-md-4">
+        <dl class="header">
+          <strong>No. of episodes</strong>
+          <dd><%= "#{@product.episodes.size}/#{@product.number_of_episodes}" %></dd>
+        </dl>
+      </div>
+      <div class="col-md-4">
+        <dl class="header">
+          <strong>Broadcasting freequency</strong>
+          <dd><%= @product.broadcasting_frequency.regularity %></dd>
+        </dl>
+      </div>
+    <% end %>
+    <div class="col-md-4">
+      <dl class="header">
+        <strong>Broadcasting time</strong>
+        <dd><%= @product.broadcasting_time %></dd>
+      </dl>
+    </div>
+    <div class="col-md-4">
+      <dl class="header">
+        <strong>Duration</strong>
+        <dd><%= @product.duration.length_in_minutes %> min.</dd>
+      </dl>
+    </div>
+    <div class="col-md-12">
+      <dl class="header">
+        <dd><strong>Preseneter(s)</strong></dd>
+        <% if @product.presenters.exists? %>
+          <ul class="list-inline">
+            <% @product.presenters.each do |presenter| %>
+              <li>&bull; <%= presenter.name %></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <dd>No presenter</dd>
+        <% end %>
+      </dl>
+    </div>
+    <% if @product.single_product? %>
+      <div class="col-md-12">
+        <dl class="header">
+          <dd><strong>Guest(s)</strong></dd>
+          <% if @product.guests.exists? %>
+            <ul class="list-inline">
+              <% @product.guests.each do |guest| %>
+                <li>&bull; <%= guest.name %></li>
+              <% end %>
+            </ul>
+          <% else %>
+            <dd>No guest</dd>
+          <% end %>
+        </dl>
+      </div>
+      <div class="col-md-6">
+        <dl class="header">
+          <strong>Production company</strong>
+          <dd><%= @product.production_company.name %></dd>
+        </dl>
+      </div>
+      <div class="col-md-6">
+        <dl class="header">
+          <strong>PO number</strong>
+          <dd><%= @product.po %></dd>
+        </dl>
+      </div>
+      <div class="col-md-6">
+        <dl class="header">
+          <strong>Production region</strong>
+          <dd><%= @product.production_region %></dd>
+        </dl>
+      </div>
+      <div class="col-md-6">
+        <dl class="header">
+          <strong>First broadcasting date</strong>
+          <dd><%= @product.broadcasting_date %></dd>
+        </dl>
+      </div>
+      <div class="col-md-12">
+        <dl class="header">
+          <strong>Subtitled?</strong>
+          <dd><%= true_or_false? @product.subtitled? %></dd>
+        </dl>
+      </div>
+      <div class="col-md-12">
+        <dl class="header">
+          <strong>Broadcast Media</strong>
+          <ul class="list-inline">
+            <% @product.broadcast_media.each do |bm| %>
+              <li>&bull; <%= bm.name %></li>
+            <% end %>
+          </ul>
+        </dl>
+      </div>
+    <% end %>
+    <div class="col-md-12" id="marketing-details-header">
+      <div class="header">
+        <h4>Marketing Details <span class="caret"></h4>
+      </div>
+    </div>
+    <div class="marketing-details hidden">
+      <div class="col-md-12">
+        <dl class="header">
+          <strong>Format and structure</strong>
+          <dd><%= @product.format_and_structure %></dd>
+        </dl>
+      </div>
+      <div class="col-md-12">
+        <dl class="header">
+          <strong>Programme benchmark</strong>
+          <dd><%= @product.programme_benchmark %></dd>
+        </dl>
+      </div>
+      <div class="col-md-12">
+        <dl class="header">
+          <strong>Marketing message ideas</strong>
+          <dd><%= @product.marketing_message_ideas %></dd>
+        </dl>
+      </div>
+      <div class="col-md-12">
+        <div class="header">
+          <h4>Target Audience:</h4>
+        </div> 
+      </div>
+      <div class="col-md-12">
+        <dl class="header">
+          <strong>Education</strong>
+          <ul class="list-inline">
+            <% @product.educations.each do |education| %>
+              <li>&bull; <%= education.level %></li>
+            <% end %>
+          </ul>
+        </dl>
+      </div>
+      <div class="col-md-6">
+        <dl class="header">
+          <strong>Age</strong>
+          <ul class="list-inline">
+            <% @product.ages.each do |age| %>
+              <li>&bull; <%= age.range %></li>
+            <% end %>
+          </ul>
+        </dl>
+      </div>
+      <div class="col-md-6">
+        <dl class="header">
+          <strong>Gender</strong>
+          <ul class="list-inline">
+            <% @product.genders.each do |gender| %>
+              <li>&bull; <%= gender.identity %></li>
+            <% end %>
+          </ul>
+        </dl>
+      </div>
+      <div class="col-md-12">
+        <dl class="header">
+          <strong>Region</strong>
+          <ul class="list-inline">
+            <% @product.regions.each do |region| %>
+              <li>&bull; <%= region.name %></li>
+            <% end %>
+          </ul>
+        </dl>
+      </div>
+    </div>  
+  </div>
+</div>
+

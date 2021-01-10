@@ -1,0 +1,65 @@
+<%= form_for([@product, @episode, @viewing_form], html: { class: "form form-signin", role: "form" }) do |f| %>
+  <% if f.object.errors.any? %>
+    <div class="alert alert-danger">
+      <% f.object.errors.full_messages.each do |error| %>
+        <p><%= error %></p>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="row">
+    <div class="col-md-6 form-group">
+      <%= label_tag :user, 'Initiator' %>
+      <%= text_field_tag :user, current_user.full_name, {disabled: true, class: 'form-control'} %>
+    </div>
+    <div class="col-md-6 form-group">
+      <%= label_tag :date, 'Date' %>
+      <%= text_field_tag :date, Date.today, {disabled: true, class: 'form-control'} %>
+    </div>
+    <div class="col-md-6 form-group">
+      <%= label_tag :email %>
+      <%= text_field_tag :email, current_user.email, {disabled: true, class: 'form-control'} %>
+    </div>
+    <div class="col-md-6 form-group">
+      <%= f.label :contact_number %>
+      <%= f.phone_field :contact_number, required: true, placeholder: 'Mobile Number', class: 'form-control' %>
+    </div>
+    <div class="col-md-6 form-group">
+      <% if @episode %>
+        <%= label_tag :episode, 'Episode title' %>
+        <%= text_field_tag :episode, @episode.english_title, {disabled: true, class: 'form-control'} %>
+      <% else %>
+        <%= label_tag :product, 'Product title' %>
+        <%= text_field_tag :product, @product.english_title, {disabled: true, class: 'form-control'} %>
+      <% end %>
+    </div>
+    <div class="col-md-6 form-group">
+      <%= f.label :programme_id, 'ID' %>
+      <%= f.text_field :programme_id, required: true, placeholder: 'ID', class: 'form-control' %>
+    </div>
+    <div class="col-md-6 form-group">
+      <%= f.label :ingest_date %>
+      <%= f.text_field :ingest_date, required: true, placeholder: 'Ingest', class: 'form-control datepicker' %>
+    </div>
+    <div class="col-md-6 form-group">
+      <%= f.label :tx_date, 'TX date' %>
+      <%= f.text_field :tx_date, required: true, placeholder: 'TX', class: 'form-control datepicker' %>
+    </div>
+  </div>
+  <div class="row">
+    <h4>Parts</h4>
+    <div class="parts">
+      <%= f.fields_for :parts do |builder| %>
+        <%= render 'part_fields', f: builder %>
+      <% end %>
+    </div>
+    <div class='col-md-12'>
+      <%= link_to_add_association f, :parts, class: 'btn btn-success', data: { association_insertion_node: '.parts', association_insertion_method: :append } do %>
+          <span class="glyphicon glyphicon-plus"></span>
+          Add Part
+      <% end %>
+    </div>
+  </div>
+  <div class="footer">
+    <%= f.submit 'Submit Viewing Form', class: "btn btn-primary btn-lg btn-block" %>
+  </div>
+<% end %>

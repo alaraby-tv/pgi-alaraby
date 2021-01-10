@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Programmes Gathering Interface</title>
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <%= javascript_include_tag "https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js", "https://oss.maxcdn.com/respond/1.4.2/respond.min.js" %>
+  <![endif]-->
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+
+  <%= favicon_link_tag asset_path('favicon.ico') %>
+</head>
+<body>
+  <div class="container">
+    <div class="header clearfix">
+      <% if user_signed_in? %>
+        <nav>   
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation" class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.full_name %> <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu ps2">
+                <% if current_user.superuser? %>
+                  <% if current_user.admin? %>
+                    <li><%= link_to "Admin", admin_root_url %></li>
+                  <% end %>
+                  <li><%= link_to "Invite new user", new_user_invitation_path %></li>
+                <% end %>
+                <li><%= link_to "Change password", edit_user_registration_path %></li>
+                <li role="separator" class="divider"></li>
+                <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+              </ul>
+            </li>
+          </ul>
+        <% end %>
+       <%= link_to root_path, class: 'navbar-brand' do %>
+        <%= image_tag("alaraby_logo.png", alt: "alaraby logo", class: 'navbar-logo') %>
+       <% end %>
+      </nav>
+    </div>
+    <% flash.each do |name, msg| %>
+      <% unless name == "timedout" %>
+        <% if name == "error" %>
+          <% name = "danger" %>
+        <% elsif name == "alert" %>
+          <% name = "info" %>
+        <% else %>
+          <% name = "success" %>
+        <% end %>
+        <%= content_tag :div, class: "alert alert-#{name} alert-dismissable", role: "alert" do %>
+          <span type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></span>
+          <%= msg %>
+        <% end %>
+      <% end %>
+    <% end %>
+    <div class="jumbotron">
+      <% if user_signed_in? %>
+        <ol class="breadcrumb">
+          <%= breadcrumbs(display_single_fragment: true, separator: " &rsaquo; ") %> 
+        </ol>
+      <% end %>
+      <%= yield %>
+    </div>
+    <footer class="footer">
+      <div class="pull-left">
+        <p>
+          <strong>Program Gathering Interface v0.1 beta - &copy; Alaraby Television Network Ltd.</strong><br>
+          <small>Developed by Przemyslaw Markowski, September 2019</small>
+        </p>
+        <p>
+          <strong>Help & Support:</strong><br>
+          <small>Duty Broadcast Engineer, mobile +44 (0)7917 077 529 internal call 4001<br>
+          Duty IT Engineer, mobile +44 (0)7917 068 243 internal call 4002<br>
+          Email: <%= mail_to "sdu@alaraby.tv", "Software Development Unit", subject: "Program Gathering Interface Application" %></small>
+        </p>
+      </div>
+      <div class="pull-right">
+        
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
